@@ -39,7 +39,6 @@
 
 #define _USE_MATH_DEFINES
 
-#include "matrix.h"
 #include "mex.h"
 #include "math.h"
 
