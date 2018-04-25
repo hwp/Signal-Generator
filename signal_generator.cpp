@@ -232,9 +232,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
     else {
         myPrintf("Signal Generator (Version 1.5.20170712) by Emanuel Habets\n"
                 "Copyright (C) 2008-2017 E.A.P. Habets.\n");
-        
-        // Start progress bar
-        mexEvalString("waitbar_handle = waitbar(0,'Generate sensor signals...');");
     }
     
     const mwSize  dim_array_size = mxGetNumberOfDimensions(prhs[3]);
@@ -488,8 +485,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
             
             // Update progress bar
             if (sample_idx % 1024 == 0) {
-                sprintf(command_string, "waitbar(%.2f);", ((float) ((mic_idx*signal_length)+sample_idx+1)) / ((float) no_mics*signal_length));
-                mexEvalString(command_string);
+                mexPrintf("\rProgress: %.1f%%", (100 * (float) ((mic_idx*signal_length)+sample_idx+1)) / ((float) no_mics*signal_length));
             }
             
             // Determine row_idx_1;
@@ -614,8 +610,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
         }
     }
     
-    // Close progress bar
-    mexEvalString("close(waitbar_handle);");
+    mexPrintf("\n");
     
     delete[] beta;
     delete[] mtype;
